@@ -8,7 +8,7 @@ namespace CineAPI.Controllers
     public class ReservaController : ControllerBase
     {
         private static List<Reserva> reservas = new List<Reserva>();
-        private static List<Ticket> tickets = new List<Ticket>();
+        
 
         [HttpGet]
         public ActionResult<IEnumerable<Reserva>> GetReservas()
@@ -60,13 +60,7 @@ namespace CineAPI.Controllers
             return NoContent();
         }
 
-        [HttpPost("ticket")]
-        public ActionResult<Ticket> CreateTicket(Ticket ticket)
-        {
-            ticket.Id = tickets.Count + 1; // Asignar un ID simple
-            tickets.Add(ticket);
-            return CreatedAtAction(nameof(CreateTicket), new { id = ticket.Id }, ticket);
-        }
+       
 
         public static void InicializarDatos()
         {
@@ -74,15 +68,8 @@ namespace CineAPI.Controllers
             {
                 Id = 1,
                 FuncionId = 1,
-                AsientosReservados = new List<int> { 1, 2 },
+                AsientosReservados = new List<Asiento> {},
                 FechaReserva = DateTime.Now
-            });
-            tickets.Add(new Ticket
-            {
-                Id = 1,
-                ReservaId = 1,
-                FechaEmision = DateTime.Now,
-               
             });
         }
     }

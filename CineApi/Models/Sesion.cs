@@ -8,5 +8,17 @@ public class Sesion
     public int Id { get; set; }
     public int PeliculaId { get; set; }
     public DateTime FechaHora { get; set; }
-    public int SalaId { get; set; }
+    public int IdSala {get; set;}
+    public List<Asiento> Asientos {get; set;}
+
+
+    public void IniciarSala(){
+        int id = 0;
+        for(int x = 1; x<=8; x++){
+            for(int y = 1; y<=8; y++){
+                id++;
+                Asientos.Add(new Asiento(id:id, fila: y, columna:x) );
+            }
+        }
+    }
 }

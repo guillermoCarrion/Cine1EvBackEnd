@@ -10,7 +10,7 @@ namespace CineAPI.Controllers;
 public class PeliculaController : ControllerBase
 {
     private static List<Pelicula> peliculas = new List<Pelicula>();
-
+    
     // Método para inicializar datos
 
 

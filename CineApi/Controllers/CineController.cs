@@ -23,12 +23,5 @@ public class CineController : ControllerBase
         return CreatedAtAction(nameof(ReservarAsientos), new { id = reserva.Id }, reserva);
     }
 
-    [HttpPost("ticket")]
-    public ActionResult<Ticket> CrearTicket([FromBody] Ticket ticket)
-    {
-        // Lógica para crear un ticket a partir de una reserva
-        // Aquí deberías buscar la reserva y generar el ticket
-
-        return CreatedAtAction(nameof(CrearTicket), new { id = ticket.Id }, ticket);
-    }
+   
 }

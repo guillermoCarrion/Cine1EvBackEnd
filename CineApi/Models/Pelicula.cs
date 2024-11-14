@@ -8,9 +8,9 @@ public class Pelicula
     public string Nombre { get; set; }
     public string Director { get; set; }
     public string Sinopsis { get; set; } 
-
     public string Imagen { get; set; } 
-    // public List<int> Peliculas { get; set; } // Lista de las películas
+    public List<Sesion> sesiones {get; set;} = new List<Sesion>();
+
 
 
  public Pelicula(int id , string nombre, string director, string sinopsis, string imagen) {
@@ -19,10 +19,7 @@ public class Pelicula
         Director = director;
          Sinopsis = sinopsis;
          Imagen = imagen;
-
-
     }
-
 
  //Pelicula.InicializarDatos();
 }
