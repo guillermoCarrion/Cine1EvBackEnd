@@ -32,6 +32,7 @@ app.UseCors("PermitirOrigenLocal");
     app.UseSwaggerUI();
 //}
 
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
