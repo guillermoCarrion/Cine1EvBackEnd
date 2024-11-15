@@ -57,6 +57,38 @@ public class PeliculaController : ControllerBase
         return NoContent();
     }
 
+/*
+    public static void InicializarDatos()
+{
+    peliculas.Add(new Pelicula
+    {
+        Id = 1,
+        Nombre = "Reservoir Dogs",
+        Director = "Quentin Tarantino",
+        Sinopsis = "Seis criminales profesionales son contratados para robar en un almacén de diamantes...",
+        Imagen = "https://i.pinimg.com/736x/6c/0d/da/6c0ddab00848d4ecdf6d5afbf64be0b8.jpg",
+        Sesiones = new List<Sesion>
+        {
+            new Sesion { Id = 1, Fecha = DateTime.Today.AddHours(14), SalaId = 1 },
+            new Sesion { Id = 2, Fecha = DateTime.Today.AddDays(1).AddHours(18), SalaId = 2 }
+        }
+    });
+
+    peliculas.Add(new Pelicula
+    {
+        Id = 2,
+        Nombre = "Star Wars",
+        Director = "George Lucas",
+        Sinopsis = "La nave en la que viaja la princesa Leia es capturada por las tropas imperiales...",
+        Imagen = "https://i.pinimg.com/736x/d2/79/3c/d2793c0519e160fa3bd9a223b212f923.jpg",
+        Sesiones = new List<Sesion>
+        {
+            new Sesion { Id = 1, Fecha = DateTime.Today.AddHours(16), SalaId = 3 },
+            new Sesion { Id = 2, Fecha = DateTime.Today.AddDays(2).AddHours(20), SalaId = 4 }
+        }
+    });
+}
+*/
     public static void InicializarDatos()
     {
         peliculas.Add(new Pelicula(nombre: "Reservoir Dogs", id: 1, director: "Quentin Tarantino", sinopsis: "Seis criminales profesionales son contratados para robar en un almacén de diamantes, pero la policía aparece inesperadamente en el momento del atraco. Algunos miembros de la banda mueren en el enfrentamiento y otros logran huir.", imagen: "https://i.pinimg.com/736x/6c/0d/da/6c0ddab00848d4ecdf6d5afbf64be0b8.jpg"));
