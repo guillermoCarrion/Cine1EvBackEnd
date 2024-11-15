@@ -39,6 +39,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 PeliculaController.InicializarDatos();
+SesionController.IniciarDatos();
 app.Run();
 
 //http://localhost:5165/swagger/index.html

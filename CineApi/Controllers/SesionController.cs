@@ -36,7 +36,7 @@ namespace CineAPI.Controllers
         }
 
 
-        /*
+        
         [HttpPut("{id}")]
         public IActionResult UpdateSesion(int id, Sesion updatedSesion)
         {
@@ -45,50 +45,28 @@ namespace CineAPI.Controllers
             {
                 return NotFound();
             }
-            sesion.AsientosReservados = updatedReserva.AsientosReservados;
-            reserva.FechaReserva = updatedReserva.FechaReserva;
+            sesion = updatedSesion;
             return NoContent();
         }
-        */
+        
 
-        /*
-        [HttpDelete("{id}")]
-        public IActionResult DeleteReserva(int id)
+       [HttpDelete("{id}")]
+        public IActionResult DeleteSesion(int id)
         {
-            var reserva = reservas.FirstOrDefault(r => r.Id == id);
-            if (reserva == null)
+            var sesion = sesiones.FirstOrDefault(r => r.Id == id);
+            if (sesion == null)
             {
                 return NotFound();
             }
-            reservas.Remove(reserva);
+            sesiones.Remove(sesion);
             return NoContent();
         }
-        */
+        
        
 
-        public void IniciarDatos(){
-            sesiones.Add(new Sesion(1, 1, DateTime.Now.AddDays(3), 1, new List<Asiento>asientos){
-
-            })
-            int id = 0;
-            for(int x = 1; x<=8; x++){
-                for(int y = 1; y<=8; y++){
-                    id++;
-                    Asientos.Add(new Asiento(id:id, fila: y, columna:x) );
-                }
-        }
+        public static void IniciarDatos(){
+            sesiones.Add(new Sesion(1,1, DateTime.Today.AddDays(3).AddHours(18).AddMinutes(30), 1));
+            
     }
-        /*
-        public static void InicializarDatos()
-        {
-            reservas.Add(new Reserva
-            {
-                Id = 1,
-                FuncionId = 1,
-                AsientosReservados = new List<Asiento> {},
-                FechaReserva = DateTime.Now
-            });
-        }
-        */
     }
 }
