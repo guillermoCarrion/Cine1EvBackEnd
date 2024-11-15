@@ -12,13 +12,13 @@ public class Sesion
     public List<Asiento> Asientos {get; set;}
 
 
-    public void IniciarSala(){
-        int id = 0;
-        for(int x = 1; x<=8; x++){
-            for(int y = 1; y<=8; y++){
-                id++;
-                Asientos.Add(new Asiento(id:id, fila: y, columna:x) );
-            }
-        }
+    public Sesion(int id, int peliculaId, DateTime fechaHora, int idSala, List<Asiento> asientos)
+    {
+        Id = id;
+        PeliculaId = peliculaId;
+        FechaHora = fechaHora;
+        IdSala = idSala;
+        Asientos = asientos;
     }
+    
 }
