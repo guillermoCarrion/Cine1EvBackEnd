@@ -10,7 +10,9 @@ namespace CineAPI.Controllers;
 public class PeliculaController : ControllerBase
 {
     private static List<Pelicula> peliculas = new List<Pelicula>();
-    
+
+    private static int contadorSesionId = 1;
+
     // Método para inicializar datos
 
 
@@ -57,48 +59,89 @@ public class PeliculaController : ControllerBase
         return NoContent();
     }
 
-/*
-    public static void InicializarDatos()
-{
-    peliculas.Add(new Pelicula
-    {
-        Id = 1,
-        Nombre = "Reservoir Dogs",
-        Director = "Quentin Tarantino",
-        Sinopsis = "Seis criminales profesionales son contratados para robar en un almacén de diamantes...",
-        Imagen = "https://i.pinimg.com/736x/6c/0d/da/6c0ddab00848d4ecdf6d5afbf64be0b8.jpg",
-        Sesiones = new List<Sesion>
-        {
-            new Sesion { Id = 1, Fecha = DateTime.Today.AddHours(14), SalaId = 1 },
-            new Sesion { Id = 2, Fecha = DateTime.Today.AddDays(1).AddHours(18), SalaId = 2 }
-        }
-    });
 
-    peliculas.Add(new Pelicula
-    {
-        Id = 2,
-        Nombre = "Star Wars",
-        Director = "George Lucas",
-        Sinopsis = "La nave en la que viaja la princesa Leia es capturada por las tropas imperiales...",
-        Imagen = "https://i.pinimg.com/736x/d2/79/3c/d2793c0519e160fa3bd9a223b212f923.jpg",
-        Sesiones = new List<Sesion>
-        {
-            new Sesion { Id = 1, Fecha = DateTime.Today.AddHours(16), SalaId = 3 },
-            new Sesion { Id = 2, Fecha = DateTime.Today.AddDays(2).AddHours(20), SalaId = 4 }
-        }
-    });
-}
-*/
+
     public static void InicializarDatos()
     {
-        peliculas.Add(new Pelicula(nombre: "Reservoir Dogs", id: 1, director: "Quentin Tarantino", sinopsis: "Seis criminales profesionales son contratados para robar en un almacén de diamantes, pero la policía aparece inesperadamente en el momento del atraco. Algunos miembros de la banda mueren en el enfrentamiento y otros logran huir.", imagen: "https://i.pinimg.com/736x/6c/0d/da/6c0ddab00848d4ecdf6d5afbf64be0b8.jpg"));
-        peliculas.Add(new Pelicula(nombre: "Star Wars", id: 2, director: "George Lucas", sinopsis: "La nave en la que viaja la princesa Leia es capturada por las tropas imperiales al mando del temible Darth Vader. Antes de ser atrapada, Leia consigue introducir un mensaje en su robot R2-D2, quien acompañado de su inseparable C-3PO logran escapar.", imagen: "https://i.pinimg.com/736x/d2/79/3c/d2793c0519e160fa3bd9a223b212f923.jpg"));
-        peliculas.Add(new Pelicula(nombre: "Akira", id: 3, director: "Katsuhiro Otomo", sinopsis: "En el Neo-Tokio de 2019, tras la Tercera Guerra Mundial, los viejos amigos Kaneda y Tetsuo son miembros de una violenta banda de motociclistas. Durante una pelea con una banda rival, un extraño niño pequeño con la cara arrugada entra en la refriega.", imagen:"https://i.pinimg.com/736x/b5/e7/e3/b5e7e3aa9a4e0e5ef65e34c7cb9a6e88.jpg"));
-        peliculas.Add(new Pelicula(nombre: "2001: A Space Odyssey", id: 4, director: "Stanley Kubrick", sinopsis: "La película de ciencia ficción por antonomasia de la historia del cine narra los diversos periodos de la historia de la humanidad, no sólo del pasado, sino también del futuro.", imagen: "https://i.pinimg.com/736x/8e/2a/e9/8e2ae9256e8bdc4a1265a21cceffb16a.jpg"));
-        peliculas.Add(new Pelicula(nombre: "American History X", id: 5, director: "Tony Kaye", sinopsis: "Tras cumplir condena por el asesinato de dos hombres negros, Derek Vinyard, logra vencer su fanatismo, pero no se dará por satisfecho hasta que no haga entrar en razón a su hermano, quien le ve como un héroe e intenta seguir sus pasos.", imagen:"https://i.pinimg.com/736x/1a/5e/d5/1a5ed5133f34b7885c6b2d96c4830f6c.jpg"));
-        peliculas.Add(new Pelicula(nombre: "Enter the Void", id: 6, director: "Gaspar Noé", sinopsis: "Óscar (Nathaniel Brown) vive en Tokio con su hermana, Linda (Paz de la Huerta), y se sustenta a sí mismo vendiendo drogas, contra el consejo de su amigo, Alex (Cyril Roy). Alex intenta reubicar el interés de Óscar en el Libro tibetano de los muertos, un libro budista sobre la vida después de la muerte.", imagen:"https://i.pinimg.com/736x/c4/a1/a5/c4a1a516a08e7be519e61a41ff533c46.jpg"));
+        peliculas.Add(new Pelicula(nombre: "Reservoir Dogs", id: 1, director: "Quentin Tarantino", sinopsis: "Seis criminales profesionales son contratados para robar en un almacén de diamantes, pero la policía aparece inesperadamente en el momento del atraco. Algunos miembros de la banda mueren en el enfrentamiento y otros logran huir.", imagen: "https://i.pinimg.com/736x/6c/0d/da/6c0ddab00848d4ecdf6d5afbf64be0b8.jpg")
+        {
+            sesiones = GenerarSesionesParaSieteDias(1, DateTime.Parse("14:00"), DateTime.Parse("18:00"), 6, 8)
+        });
+
+        peliculas.Add(new Pelicula(nombre: "Star Wars", id: 2, director: "George Lucas", sinopsis: "La nave en la que viaja la princesa Leia es capturada por las tropas imperiales al mando del temible Darth Vader. Antes de ser atrapada, Leia consigue introducir un mensaje en su robot R2-D2, quien acompañado de su inseparable C-3PO logran escapar.", imagen: "https://i.pinimg.com/736x/d2/79/3c/d2793c0519e160fa3bd9a223b212f923.jpg")
+        {
+            sesiones = GenerarSesionesParaSieteDias(2, DateTime.Parse("14:00"), DateTime.Parse("18:00"), 6, 8)
+        });
+
+        peliculas.Add(new Pelicula(nombre: "Akira", id: 3, director: "Katsuhiro Otomo", sinopsis: "En el Neo-Tokio de 2019, tras la Tercera Guerra Mundial, los viejos amigos Kaneda y Tetsuo son miembros de una violenta banda de motociclistas. Durante una pelea con una banda rival, un extraño niño pequeño con la cara arrugada entra en la refriega.", imagen:"https://i.pinimg.com/736x/b5/e7/e3/b5e7e3aa9a4e0e5ef65e34c7cb9a6e88.jpg")
+        {
+            sesiones = GenerarSesionesParaSieteDias(3, DateTime.Parse("14:00"), DateTime.Parse("18:00"), 6, 8)
+        });
+
+        peliculas.Add(new Pelicula(nombre: "2001: A Space Odyssey", id: 4, director: "Stanley Kubrick", sinopsis: "La película de ciencia ficción por antonomasia de la historia del cine narra los diversos periodos de la historia de la humanidad, no sólo del pasado, sino también del futuro.", imagen: "https://i.pinimg.com/736x/8e/2a/e9/8e2ae9256e8bdc4a1265a21cceffb16a.jpg")
+        {
+            sesiones = GenerarSesionesParaSieteDias(4, DateTime.Parse("14:00"), DateTime.Parse("18:00"), 6, 8)
+        });
+
+        peliculas.Add(new Pelicula(nombre: "American History X", id: 5, director: "Tony Kaye", sinopsis: "Tras cumplir condena por el asesinato de dos hombres negros, Derek Vinyard, logra vencer su fanatismo, pero no se dará por satisfecho hasta que no haga entrar en razón a su hermano, quien le ve como un héroe e intenta seguir sus pasos.", imagen:"https://i.pinimg.com/736x/1a/5e/d5/1a5ed5133f34b7885c6b2d96c4830f6c.jpg")
+        {
+            sesiones = GenerarSesionesParaSieteDias(5, DateTime.Parse("14:00"), DateTime.Parse("18:00"), 6, 8)
+        });
+
+        peliculas.Add(new Pelicula(nombre: "Enter the Void", id: 6, director: "Gaspar Noé", sinopsis: "Óscar (Nathaniel Brown) vive en Tokio con su hermana, Linda (Paz de la Huerta), y se sustenta a sí mismo vendiendo drogas, contra el consejo de su amigo, Alex (Cyril Roy). Alex intenta reubicar el interés de Óscar en el Libro tibetano de los muertos, un libro budista sobre la vida después de la muerte.", imagen:"https://i.pinimg.com/736x/c4/a1/a5/c4a1a516a08e7be519e61a41ff533c46.jpg")
+        {
+            sesiones = GenerarSesionesParaSieteDias(6, DateTime.Parse("14:00"), DateTime.Parse("18:00"), 6, 8)
+        });
     }
 
 
+    private static List<Sesion> GenerarSesionesParaSieteDias(int idsala, DateTime hora1, DateTime hora2, int filas, int columnas)
+    {
+        var sesiones = new List<Sesion>();
+        
+
+        for (int dia = 1; dia < 8; dia++)
+        {
+            var fechaBase = DateTime.Today.AddDays(dia);
+
+            // Primera sesión del día
+            sesiones.Add(new Sesion
+            {
+                IdSesion = contadorSesionId++,
+                FechaHora = fechaBase.Add(hora1.TimeOfDay),
+                IdSala = idsala,
+                PeliculaId = idsala,
+                Sala = CrearSala(filas, columnas)
+            });
+
+            // Segunda sesión del día
+            sesiones.Add(new Sesion
+            {
+                IdSesion = contadorSesionId++,
+                FechaHora = fechaBase.Add(hora2.TimeOfDay),
+                IdSala = idsala,
+                Sala = CrearSala(filas, columnas)
+            });
+        }
+
+        return sesiones;
+    }
+
+
+    private static List<Asiento> CrearSala(int filas, int columnas)
+    {
+        var sala = new List<Asiento>();
+        var idasiento = 1;
+        for (int fila = 1; fila <= filas; fila++)
+        {
+            for (int columna = 1; columna <= columnas; columna++)
+            {
+                sala.Add(new Asiento(idasiento, fila, columna));
+                idasiento++;
+            }
+        }
+
+        return sala;
+    }
 
 }

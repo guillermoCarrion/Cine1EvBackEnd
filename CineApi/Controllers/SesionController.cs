@@ -19,7 +19,7 @@ namespace CineAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult<Sesion> GetSesion(int id)
         {
-            var sesion = sesiones.FirstOrDefault(r => r.Id == id);
+            var sesion = sesiones.FirstOrDefault(r => r.IdSesion == id);
             if (sesion == null)
             {
                 return NotFound();
@@ -30,9 +30,9 @@ namespace CineAPI.Controllers
         [HttpPost]
         public ActionResult<Sesion> CreateSesion(Sesion sesion)
         {
-            sesion.Id = sesiones.Count + 1; // Asignar un ID simple (en un sistema real, usarías un ID de base de datos)
+            sesion.IdSesion = sesiones.Count + 1; // Asignar un ID simple (en un sistema real, usarías un ID de base de datos)
             sesiones.Add(sesion);
-            return CreatedAtAction(nameof(GetSesion), new { id = sesion.Id }, sesion);
+            return CreatedAtAction(nameof(GetSesion), new { id = sesion.IdSesion }, sesion);
         }
 
 
@@ -40,7 +40,7 @@ namespace CineAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateSesion(int id, Sesion updatedSesion)
         {
-            var sesion = sesiones.FirstOrDefault(r => r.Id == id);
+            var sesion = sesiones.FirstOrDefault(r => r.IdSesion == id);
             if (sesion == null)
             {
                 return NotFound();
@@ -53,7 +53,7 @@ namespace CineAPI.Controllers
        [HttpDelete("{id}")]
         public IActionResult DeleteSesion(int id)
         {
-            var sesion = sesiones.FirstOrDefault(r => r.Id == id);
+            var sesion = sesiones.FirstOrDefault(r => r.IdSesion == id);
             if (sesion == null)
             {
                 return NotFound();
@@ -64,9 +64,6 @@ namespace CineAPI.Controllers
         
        
 
-        public static void IniciarDatos(){
-            sesiones.Add(new Sesion(1,1, DateTime.Today.AddDays(3).AddHours(18).AddMinutes(30), 1));
-            
-    }
+        
     }
 }
