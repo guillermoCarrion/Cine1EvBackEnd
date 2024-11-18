@@ -25,6 +25,7 @@ var app = builder.Build();
 // Configuración de CORS en el pipeline de la aplicación
 app.UseCors("PermitirOrigenLocal");
 
+
 // Configure the HTTP request pipeline.
 /*if (app.Environment.IsDevelopment())
 {*/
