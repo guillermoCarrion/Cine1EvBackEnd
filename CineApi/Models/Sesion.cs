@@ -11,7 +11,4 @@ public class Sesion
     public int IdSala {get; set;}
     public List<Asiento> Sala {get; set;} = new List<Asiento>();
 
-
-
-    
 }
