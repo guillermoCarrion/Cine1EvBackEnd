@@ -70,52 +70,54 @@ namespace CineAPI.Controllers
         }
 
 
-
-       [HttpPost("{sesionId}/asientos/reservar")]
-public ActionResult ReservarAsientos(int sesionId, [FromBody] List<int> asientosIds)
-{
-    // Buscar la sesión correspondiente
-    var sesion = peliculas
-        .SelectMany(p => p.sesiones)
-        .FirstOrDefault(s => s.IdSesion == sesionId);
-
-    if (sesion == null)
-    {
-        return NotFound(new { Message = "Sesión no encontrada" });
-    }
-
-    // Validar y actualizar los asientos
-    var asientosReservados = new List<Asiento>();
-    foreach (var idAsiento in asientosIds)
-    {
-        var asiento = sesion.Sala.FirstOrDefault(a => a.IdAsiento == idAsiento);
-        if (asiento == null)
+        // Metodo para reservar asientos
+        
+        [HttpPost("{sesionId}/asientos/reservar")]
+        public ActionResult ReservarAsientos(int sesionId, [FromBody] List<int> asientosIds)
         {
-            return NotFound(new { Message = $"El asiento con ID {idAsiento} no existe en esta sesión." });
+            // Buscar la sesión correspondiente
+            var sesion = peliculas
+                .SelectMany(p => p.sesiones)
+                .FirstOrDefault(s => s.IdSesion == sesionId);
+
+            if (sesion == null)
+            {
+                return NotFound(new { Message = "Sesión no encontrada" });
+            }
+
+            // Validar y actualizar los asientos
+            var asientosReservados = new List<Asiento>();
+            foreach (var idAsiento in asientosIds)
+            {
+                var asiento = sesion.Sala.FirstOrDefault(a => a.IdAsiento == idAsiento);
+                if (asiento == null)
+                {
+                    return NotFound(new { Message = $"El asiento con ID {idAsiento} no existe en esta sesión." });
+                }
+
+                if (asiento.EstaReservado)
+                {
+                    return BadRequest(new { Message = $"El asiento con ID {idAsiento} ya está reservado." });
+                }
+
+                // Reservar el asiento
+                asiento.EstaReservado = true;
+                asientosReservados.Add(asiento);
+            }
+
+            return Ok(new
+            {
+                Message = "Asientos reservados con éxito",
+                AsientosReservados = asientosReservados.Select(a => new
+                {
+                    a.IdAsiento,
+                    a.Precio,
+                    a.Fila,
+                    a.Columna,
+                    a.EstaReservado
+                })
+            });
         }
-
-        if (asiento.EstaReservado)
-        {
-            return BadRequest(new { Message = $"El asiento con ID {idAsiento} ya está reservado." });
-        }
-
-        // Reservar el asiento
-        asiento.EstaReservado = true;
-        asientosReservados.Add(asiento);
-    }
-
-    return Ok(new
-    {
-        Message = "Asientos reservados con éxito",
-        AsientosReservados = asientosReservados.Select(a => new
-        {
-            a.IdAsiento,
-            a.Fila,
-            a.Columna,
-            a.EstaReservado
-        })
-    });
-}
 
 
 
