@@ -64,7 +64,7 @@ namespace CineAPI.Controllers
         [HttpPost]
         public ActionResult<Sesion> CreateSesion(Sesion sesion)
         {
-            sesion.IdSesion = sesiones.Count + 1; // Asignar un ID simple (en un sistema real, usarías un ID de base de datos)
+            sesion.IdSesion = sesiones.Count + 1; // Asignar un ID simple sin base de datos)
             sesiones.Add(sesion);
             return CreatedAtAction(nameof(GetSesion), new { id = sesion.IdSesion }, sesion);
         }
@@ -75,7 +75,7 @@ namespace CineAPI.Controllers
         [HttpPost("{sesionId}/asientos/reservar")]
         public ActionResult ReservarAsientos(int sesionId, [FromBody] List<int> asientosIds)
         {
-            // Buscar la sesión correspondiente
+            // Buscar su sesión 
             var sesion = peliculas
                 .SelectMany(p => p.sesiones)
                 .FirstOrDefault(s => s.IdSesion == sesionId);

@@ -18,11 +18,13 @@ public class Pelicula
    public string  FechaEstreno {get; set;}
 
    public string Pegi {get; set;}
+
+   public string UrlTrailer {get; set;}
     public List<Sesion> sesiones {get; set;} = new List<Sesion>();
 
 
 
- public Pelicula(int id , string nombre, string director, string sinopsis, string imagen, int idsala , string  duracion , string genero , string fechaEstreno, string pegi) {
+ public Pelicula(int id , string nombre, string director, string sinopsis, string imagen, int idsala , string  duracion , string genero , string fechaEstreno, string pegi , string urlTrailer) {
         Id = id;
         Nombre = nombre;
         Director = director;
@@ -33,6 +35,7 @@ public class Pelicula
          Genero = genero;
          FechaEstreno = fechaEstreno;
          Pegi = pegi; 
+         UrlTrailer = urlTrailer;
     }
 
  //Pelicula.InicializarDatos();
