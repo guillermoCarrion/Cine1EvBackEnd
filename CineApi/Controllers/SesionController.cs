@@ -41,7 +41,7 @@ namespace CineAPI.Controllers
                 return NotFound(new { Message = "Sesión no encontrada" });
             }
 
-            return Ok(sesion.Sala); 
+            return Ok(sesion.Sala);
         }
 
 
@@ -51,14 +51,14 @@ namespace CineAPI.Controllers
         {
             var peli = peliculas
                 .FirstOrDefault(p => p.Id == Id);
-                
-            
+
+
             if (peli == null)
             {
                 return NotFound(new { Message = "Sesión no encontrada" });
             }
 
-            return Ok(peli.sesiones); 
+            return Ok(peli.sesiones);
         }
 
         [HttpPost]
@@ -71,7 +71,7 @@ namespace CineAPI.Controllers
 
 
 
-        [HttpPost("{sesionId}/asientos/reservar")]
+       [HttpPost("{sesionId}/asientos/reservar")]
 public ActionResult ReservarAsientos(int sesionId, [FromBody] List<int> asientosIds)
 {
     // Buscar la sesión correspondiente
@@ -121,16 +121,6 @@ public ActionResult ReservarAsientos(int sesionId, [FromBody] List<int> asientos
 
 
 
-
-
-
-
-
-
-
-
-
-
         [HttpPut("{id}")]
         public IActionResult UpdateSesion(int id, Sesion updatedSesion)
         {
@@ -155,8 +145,6 @@ public ActionResult ReservarAsientos(int sesionId, [FromBody] List<int> asientos
             sesiones.Remove(sesion);
             return NoContent();
         }
-
-
 
 
     }
