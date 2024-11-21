@@ -10,6 +10,7 @@ public class Asiento
     public int Fila { get; set; }
     public int Columna { get; set; }
     
+    
     public bool EstaReservado { get; set; } = false;
 
      public Asiento(int id, int fila, int columna) {
