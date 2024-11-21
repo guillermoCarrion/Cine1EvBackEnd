@@ -7,8 +7,10 @@ namespace CineAPI.Controllers
     [ApiController]
     public class SesionController : ControllerBase
     {
-        private static List<Sesion> sesiones = new List<Sesion>();
         private static List<Pelicula> peliculas = PeliculaController.Peliculas;
+        private static List<Sesion> sesiones = peliculas
+                .SelectMany(p => p.sesiones)
+                .ToList(); 
 
         [HttpGet]
         public ActionResult<IEnumerable<Sesion>> GetSesiones()
@@ -16,10 +18,10 @@ namespace CineAPI.Controllers
             return Ok(sesiones);
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<Sesion> GetSesion(int id)
+        [HttpGet("{sesionId}")]
+        public ActionResult<Sesion> GetSesion(int sesionId)
         {
-            var sesion = sesiones.FirstOrDefault(r => r.IdSesion == id);
+            var sesion = sesiones.FirstOrDefault(r => r.IdSesion == sesionId);
             if (sesion == null)
             {
                 return NotFound();
@@ -27,22 +29,6 @@ namespace CineAPI.Controllers
             return Ok(sesion);
         }
 
-
-        // Devuelve los asientos de una sesion
-        [HttpGet("{sesionId}/asientos")]
-        public ActionResult<IEnumerable<Asiento>> GetAsientosDeSesion(int sesionId)
-        {
-            var sesion = peliculas
-                .SelectMany(p => p.sesiones)
-                .FirstOrDefault(s => s.IdSesion == sesionId);
-
-            if (sesion == null)
-            {
-                return NotFound(new { Message = "Sesión no encontrada" });
-            }
-
-            return Ok(sesion.Sala);
-        }
 
 
         // Devuelve las sesiones de una pelicula en concreto
@@ -61,6 +47,22 @@ namespace CineAPI.Controllers
             return Ok(peli.sesiones);
         }
 
+
+        // Devuelve los asientos de una sesion
+        [HttpGet("{sesionId}/asientos")]
+        public ActionResult<IEnumerable<Asiento>> GetAsientosDeSesion(int sesionId)
+        {
+            var sesion = sesiones
+                .FirstOrDefault(s => s.IdSesion == sesionId);
+
+            if (sesion == null)
+            {
+                return NotFound(new { Message = "Sesión no encontrada" });
+            }
+
+            return Ok(sesion.Sala);
+        }
+
         [HttpPost]
         public ActionResult<Sesion> CreateSesion(Sesion sesion)
         {
@@ -71,13 +73,12 @@ namespace CineAPI.Controllers
 
 
         // Metodo para reservar asientos
-        
+
         [HttpPost("{sesionId}/asientos/reservar")]
         public ActionResult ReservarAsientos(int sesionId, [FromBody] List<int> asientosIds)
         {
-            // Buscar su sesión 
-            var sesion = peliculas
-                .SelectMany(p => p.sesiones)
+            // Buscar la sesion 
+            var sesion = sesiones
                 .FirstOrDefault(s => s.IdSesion == sesionId);
 
             if (sesion == null)
@@ -90,6 +91,7 @@ namespace CineAPI.Controllers
             foreach (var idAsiento in asientosIds)
             {
                 var asiento = sesion.Sala.FirstOrDefault(a => a.IdAsiento == idAsiento);
+
                 if (asiento == null)
                 {
                     return NotFound(new { Message = $"El asiento con ID {idAsiento} no existe en esta sesión." });

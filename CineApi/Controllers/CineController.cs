@@ -6,6 +6,7 @@ namespace CineApi.Controllers;
 [Route("[controller]")]
 public class CineController : ControllerBase
 {
+    /*
     private readonly ILogger<CineController> _logger;
 
     public CineController(ILogger<CineController> logger)
@@ -22,6 +23,6 @@ public class CineController : ControllerBase
 
         return CreatedAtAction(nameof(ReservarAsientos), new { id = reserva.Id }, reserva);
     }
-
+*/
    
 }
