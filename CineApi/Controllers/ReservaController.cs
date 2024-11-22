@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using CineApi; 
+using CineApi;
 
 namespace CineAPI.Controllers
 {
@@ -8,7 +8,7 @@ namespace CineAPI.Controllers
     public class ReservaController : ControllerBase
     {
         private static List<Reserva> reservas = new List<Reserva>();
-        
+
 
         [HttpGet]
         public ActionResult<IEnumerable<Reserva>> GetReservas()
@@ -16,10 +16,10 @@ namespace CineAPI.Controllers
             return Ok(reservas);
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<Reserva> GetReserva(int id)
+        [HttpGet("{idReserva}")]
+        public ActionResult<Reserva> GetReserva(int idReserva)
         {
-            var reserva = reservas.FirstOrDefault(r => r.Id == id);
+            var reserva = reservas.FirstOrDefault(r => r.IdReserva == idReserva);
             if (reserva == null)
             {
                 return NotFound();
@@ -28,49 +28,59 @@ namespace CineAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Reserva> CreateReserva(Reserva reserva , int SesionId , int PrecioReserva)
+        public ActionResult<Reserva> CreateReserva(Reserva reserva)
         {
-            reserva.Id = reservas.Count + 1; // Asignar un ID simple (en un sistema real, usarías un ID de base de datos)
-            reserva.IdSesion = SesionId;
-           reserva.PrecioReserva = PrecioReserva; 
-            reservas.Add(reserva);
-            return CreatedAtAction(nameof(GetReserva), new { id = reserva.Id }, reserva);
-        }
-/*
-            [HttpPut("{id}")]
-            public IActionResult UpdateReserva(int id, Reserva updatedReserva )
+            // Validar que la reserva enviada no sea nula
+            if (reserva == null)
             {
-                var reserva = reservas.FirstOrDefault(r => r.Id == id);
-                if (reserva == null)
-                {
-                    return NotFound();
-                }
-                reserva.AsientosReservados = updatedReserva.AsientosReservados;
-                reserva.FechaReserva = updatedReserva.FechaReserva;
-                return NoContent();
+                return BadRequest("Los datos de la reserva son inválidos.");
             }
 
-            [HttpDelete("{id}")]
-            public IActionResult DeleteReserva(int id)
-            {
-                var reserva = reservas.FirstOrDefault(r => r.Id == id);
-                if (reserva == null)
-                {
-                    return NotFound();
-                }
-                reservas.Remove(reserva);
-                return NoContent();
-            }*/
+            // Generar un nuevo ID para la reserva
+            reserva.IdReserva = reservas.Count + 1;
 
-      /*  public static void InicializarDatos()
-        {
-            reservas.Add(new Reserva
-            {
-                Id = 1,
-                SesionId = 1,
-                AsientosReservados = new List<Asiento> {},
-                FechaReserva = DateTime.Now
-            });
-        }*/
+            // Guardar la reserva en memoria
+            reservas.Add(reserva);
+
+            // Retornar la respuesta con el objeto creado y su ubicación
+            return CreatedAtAction(nameof(GetReserva), new { idReserva = reserva.IdReserva }, reserva);
+        }
+
+        /*
+                    [HttpPut("{id}")]
+                    public IActionResult UpdateReserva(int id, Reserva updatedReserva )
+                    {
+                        var reserva = reservas.FirstOrDefault(r => r.Id == id);
+                        if (reserva == null)
+                        {
+                            return NotFound();
+                        }
+                        reserva.AsientosReservados = updatedReserva.AsientosReservados;
+                        reserva.FechaReserva = updatedReserva.FechaReserva;
+                        return NoContent();
+                    }
+
+                    [HttpDelete("{id}")]
+                    public IActionResult DeleteReserva(int id)
+                    {
+                        var reserva = reservas.FirstOrDefault(r => r.Id == id);
+                        if (reserva == null)
+                        {
+                            return NotFound();
+                        }
+                        reservas.Remove(reserva);
+                        return NoContent();
+                    }*/
+
+        /*  public static void InicializarDatos()
+          {
+              reservas.Add(new Reserva
+              {
+                  Id = 1,
+                  SesionId = 1,
+                  AsientosReservados = new List<Asiento> {},
+                  FechaReserva = DateTime.Now
+              });
+          }*/
     }
 }
