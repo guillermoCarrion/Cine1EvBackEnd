@@ -74,8 +74,8 @@ namespace CineAPI.Controllers
 
         // Metodo para reservar asientos
 
-        [HttpPost("{sesionId}/asientos/reservar")]
-        public ActionResult ReservarAsientos(int sesionId, [FromBody] List<int> asientosIds)
+        [HttpPut("{sesionId}/asientos/reservar")]
+        public IActionResult ReservarAsientos(int sesionId, [FromBody] List<int> asientosIds)
         {
             // Buscar la sesion 
             var sesion = sesiones
@@ -104,13 +104,13 @@ namespace CineAPI.Controllers
 
                 // Reservar el asiento
                 asiento.EstaReservado = true;
-                asientosReservados.Add(asiento);
+                //asientosReservados.Add(asiento);
             }
 
             return Ok(new
             {
                 Message = "Asientos reservados con éxito",
-                AsientosReservados = asientosReservados.Select(a => new
+                /*AsientosReservados = asientosReservados.Select(a => new
                 {
                     a.IdAsiento,
                     a.Precio,
@@ -118,6 +118,7 @@ namespace CineAPI.Controllers
                     a.Columna,
                     a.EstaReservado
                 })
+                */
             });
         }
 
